@@ -12,4 +12,5 @@ Made possible with:
 
 - MySQL Server 8.0 (Community Edition)
 - JDBC Driver 8.0.29
+- mysql-connector-python-8.0.29
 - Apache NetBeans IDE 13 or 8.0 

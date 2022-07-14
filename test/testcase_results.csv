@@ -1,0 +1,9 @@
+Test Name,Table,Column,Test Passed
+Check for nulls,jester_users,ID_auth,True
+Check for nulls,jester_music,music_ID,True
+Check for all rows,jester_users,ID_auth,False
+Check for min and max,jester_users,ID_auth,True
+Check for min and max,jester_music,music_ID,True
+Check for valid values,jester_users,ID_auth,False
+Check for duplicates,jester_users,ID_auth,True
+Check for duplicates,jester_music,music_ID,True
