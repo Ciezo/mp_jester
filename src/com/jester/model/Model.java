@@ -55,7 +55,7 @@ public class Model {
             System.out.println(se.getMessage());			
 	}
     }
-     //get a specific music object
+     //get a specific music objectvhj
       public Music getMusicObject(String MusicTitle)
     {
        connect.getConnection();
