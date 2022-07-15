@@ -42,10 +42,11 @@ public class Model {
      public void DeleteMusic(int oldStnum)
     {
         connect.getConnection();
+      
         try{
             myStmt=myConn.createStatement();	
             String qry="DELETE FROM jester_music WHERE music_ID = " + oldStnum;
-            myStmt.executeUpdate(qry);
+            myStmt.executeQuery(qry);
             myStmt.close();
             
 	}
@@ -55,21 +56,25 @@ public class Model {
 	}
     }
      //get a specific music object
-      public void getMusicObject()
+      public Music getMusicObject(String MusicTitle)
     {
        connect.getConnection();
-        String musicObj = "";
+         Music selectedItem = null;
 
         
         try {	
-            myStmt=myConn.createStatement();
-          String query = "SELECT * FROM jester_music WHERE music_title='"+ musicObj  +"'";
-	   myStmt.executeQuery(query);
-            
-              myStmt.close();
+          myStmt=myConn.createStatement();
+          String query = "SELECT * FROM jester_music WHERE music_title='"+ MusicTitle  +"'";
+	  ResultSet rs = myStmt.executeQuery(query);
+         
+          selectedItem = new Music(rs.getInt("music_ID"),rs.getString("music_title"),rs.getString("music_artist"),rs.getString("music_album"),rs.getString("music_path_to_DIR"));
+          rs.close();
+          myStmt.close();
         } catch (SQLException ex) {
            
         }
+      
+        return selectedItem;
          
     }
     
