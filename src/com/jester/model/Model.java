@@ -24,11 +24,12 @@ public class Model {
     
  public void AddMusic(Music obj)
     {
-        connect.getConnection();
+       connect.getConnection();
         
         try{
             myStmt=myConn.createStatement();	
-            String qry="INSERT INTO jester_music  VALUES(" + obj.getMusic_ID()+ ",'" + obj.getMusic_title()+ "','" + obj.getMusic_artist()+ "','" + obj.getMusic_album()+ "','" +obj.getMusic_path_to_DIR()+"')";
+            String qry="INSERT INTO jester_music VALUES('" + obj.getMusic_ID()+ "','" + obj.getMusic_title()+ "','" + obj.getMusic_artist()+ "','" + obj.getMusic_album()+ "','" +obj.getMusic_path_to_DIR()+"')";
+             //String qry="INSERT INTO jester_music VALUES(" + ",'" + obj.getMusic_title()+ "','" + obj.getMusic_artist()+ "','" + obj.getMusic_album()+ "','" +obj.getMusic_path_to_DIR()+"')";
             myStmt.executeUpdate(qry);
             myStmt.close();
            
@@ -36,7 +37,8 @@ public class Model {
 	catch(SQLException se)
 	{
             String msg="Cannot add. object" + obj.getMusic_ID() + " already exists!";
-            JOptionPane.showMessageDialog(null,msg);		
+            JOptionPane.showMessageDialog(null,msg);	
+            System.out.print(obj.getMusic_ID());
 	}
     }
      public void DeleteMusic(int oldStnum)
@@ -55,10 +57,25 @@ public class Model {
             System.out.println(se.getMessage());			
 	}
     }
+       public void DeleteRow(int oldStnum)
+    {
+        connect.getConnection();
+        try{
+            myStmt=myConn.createStatement();	
+            String qry="DELETE FROM jester_music WHERE music_ID = " + oldStnum;
+            myStmt.executeUpdate(qry);
+            myStmt.close();
+            JOptionPane.showMessageDialog(null,"Deleted successfully!");
+	}
+	catch(SQLException se)
+	{
+            System.out.println(se.getMessage());			
+	}
+    }
      //get a specific music objectvhj
       public Music getMusicObject(String MusicTitle)
     {
-       connect.getConnection();
+      connect.getConnection();
          Music selectedItem = null;
 
         
@@ -67,7 +84,7 @@ public class Model {
           String query = "SELECT * FROM jester_music WHERE music_title='"+ MusicTitle  +"'";
 	  ResultSet rs = myStmt.executeQuery(query);
          
-          selectedItem = new Music(rs.getInt("music_ID"),rs.getString("music_title"),rs.getString("music_artist"),rs.getString("music_album"),rs.getString("music_path_to_DIR"));
+          selectedItem = new Music(rs.getString("music_ID"),rs.getString("music_title"),rs.getString("music_artist"),rs.getString("music_album"),rs.getString("music_path_to_DIR"));
           rs.close();
           myStmt.close();
         } catch (SQLException ex) {
@@ -90,7 +107,7 @@ public class Model {
 
 	    while(rs.next())
             {
-                objs.add(new Music(rs.getInt("music_ID"),rs.getString("music_title"),rs.getString("music_artist"),rs.getString("music_album"),rs.getString("music_path_to_DIR")));
+                objs.add(new Music(rs.getString("music_ID"),rs.getString("music_title"),rs.getString("music_artist"),rs.getString("music_album"),rs.getString("music_path_to_DIR")));
             }
             rs.close();
 	    myStmt.close();				
