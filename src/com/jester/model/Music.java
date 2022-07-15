@@ -6,7 +6,12 @@
 package com.jester.model;
 
 public class Music {
-
+    private String  music_ID; 
+    private String music_title;
+    private String music_artist;
+    private String music_album;
+    private String music_path_to_DIR;
+    
 
     public String getMusic_title() {
         return music_title;
@@ -40,27 +45,25 @@ public class Music {
         this.music_path_to_DIR = music_path_to_DIR;
     }
 
-    public int getMusic_ID() {
+        public String getMusic_ID() {
         return music_ID;
     }
 
-    public void setMusic_ID(int music_ID) {
+    public void setMusic_ID(String music_ID) {
         this.music_ID = music_ID;
     }
 
-    public Music(int music_ID, String music_title, String music_artist, String music_album, String music_path_to_DIR) {
-        this.music_ID = music_ID;
+
+    public Music( String music_ID, String music_title, String music_artist, String music_album, String music_path_to_DIR) {
+
+        this.music_ID =music_ID;
         this.music_title = music_title;
         this.music_artist = music_artist;
         this.music_album = music_album;
         this.music_path_to_DIR = music_path_to_DIR;
     }
-    private int  music_ID; 
-    private String music_title;
-    private String music_artist;
-    private String music_album;
-    private String music_path_to_DIR;
-    
+
+
 
  
      
