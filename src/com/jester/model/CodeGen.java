@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.jester.model;
-
-/*
-    Document   : CodeGen.java
-    Package	   : com.countx.server;
-    Created on : June 28, 2022 
+/**
     Author     : Cloyd Van S. Secuya
+    Filename   : CodeGen.java
+    Package	   : com.jester.model;
+    Date of Creation : June 15, 2022
     Description:
-    	This is a java file responsible for automating the generation of item code
+    	This is our random key generator capable of generating an alphanumeric key and RGN. 
+        It is used for establishing a PRIMARY KEY to be inserted in our database. 
+            This is done when there are newly installed records to be inserted into the database. 
  */
 
-// PACKAGE
+ // PACKAGE SECITON
+package com.jester.model;
 
 
 // IMPORT SECTION
@@ -87,18 +83,18 @@ public class CodeGen {
      *        THE ITERATION IS UP UNTIL 9999
      */
     
-//    public static void main(String[] args) {
-//    	CodeGen generate = new CodeGen(); 
-//    	int num = 0; 
-//    	System.out.println("Listing all possible combinations!");
-//    	while(num < 10000) {
-//    		System.out.println("=========================================");
+//   public static void main(String[] args) {
+//   	CodeGen generate = new CodeGen(); 
+//   	int num = 0; 
+//   	System.out.println("Listing all possible combinations!");
+//   	while(num < 10000) {
+//   		System.out.println("=========================================");
 //	    	System.out.println("Iteration " + num);
-//    		generate.setRGN();
+//   		generate.setRGN();
 //	    	System.out.println("RGN: " + generate.getRGN());
 //	    	System.out.println("Item Code(key): " + generate.genKEY());
 //	    	System.out.println("=========================================");
 //	    	num++;
-//    	}
-//    }
+//   	}
+//   }
 }
