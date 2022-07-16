@@ -36,7 +36,7 @@ CREATE Database Jester_DB;
 
 CREATE TABLE Jester_DB.jester_users 
 (
-    ID_auth             INT             NOT NULL,
+    ID_auth             VARCHAR(50)     NOT NULL,
     f_name              VARCHAR(50)     NOT NULL,
     l_name              VARCHAR(50)     NOT NULL,
     userName            VARCHAR(30)     NOT NULL,
@@ -45,9 +45,9 @@ CREATE TABLE Jester_DB.jester_users
 
 CREATE TABLE Jester_DB.jester_music
 (
-    music_ID            INT             NOT NULL, 
-    music_title         VARCHAR(150)     NOT NULL, 
-    music_artist        VARCHAR(150)     NOT NULL,
-    music_album         VARCHAR(150)     NOT NULL,
+    music_ID            VARCHAR(50)     NOT NULL, 
+    music_title         VARCHAR(150)    NOT NULL, 
+    music_artist        VARCHAR(150)    NOT NULL,
+    music_album         VARCHAR(150)    NOT NULL,
     music_path_to_DIR   VARCHAR(150)    NOT NULL 
 );
