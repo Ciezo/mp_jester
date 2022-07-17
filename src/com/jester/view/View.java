@@ -50,12 +50,12 @@ public class View {
         cardPanel.add(mainPanel, "1");
         cardPanel.add(musicLibrary, "2");
         cardPanel.add(lyricsViewer, "3");
-        cardPanel.add(albumViewer, "4");
+        //cardPanel.add(albumViewer, "4");
         cardPanel.add(songAdder, "5");
         
         musicLibrary.setBackground(new Color(217,217,217,255));
         lyricsViewer.setBackground(new Color(217,217,217,255));
-        albumViewer.setBackground(Color.GREEN);
+        albumViewer.setBackground(new Color(217,217,217,255));
         songAdder.setBackground(new Color(217,217,217,255));
         
         //Codes for music library
@@ -377,6 +377,112 @@ public class View {
                 }
             });
         playArea.add(vLyrics);
+        
+         /*Album Viewer Editor*/
+
+        /*Value of the number of rows in the album column to be put in the int count */
+        int count = 8;
+        /*Value of the number of songs in the album */
+        int count1 = 10;
+        JPanel albumPanels[] = new JPanel[count];
+        JPanel albumHeader[] = new JPanel[count];
+        JPanel albumTitle[] = new JPanel[count];
+        JPanel songContainer[] = new JPanel[count];
+        JButton albumButton[] = new JButton[count];
+        JLabel albumSongs[] = new JLabel[count1];  //Names of the songs in the albums to be put here; Sidenote: Gonna have to make this a 2D array.
+        JPanel albumContainer = new JPanel();
+        JLabel albumName[] = new JLabel[count];    //Names of the albums to be put in this array
+        JLabel albumArtist[] = new JLabel[count];  //Names of the album artists to be put in this array
+        JLabel albumPhoto[] = new JLabel[count];   //Album photos to be put in this array
+        JLabel albumSongHeader[] = new JLabel[count];
+
+        albumViewer.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
+        albumViewer.setLayout(new BorderLayout());
+        JLabel albumLabel = new JLabel("LIST OF ALBUMS", JLabel.LEFT);
+        albumLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        albumLabel.setBorder(BorderFactory.createEmptyBorder(10,30,10,10));
+        albumContainer.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 10));
+        albumContainer.setLayout(new GridLayout(count,1));
+        albumViewer.add(albumLabel, BorderLayout.NORTH);
+
+        /*dynamic for loop. */
+        for(int ctr = 0,ctr1 = 1; ctr < count; ctr++,ctr1++){
+            albumButton[ctr] = new JButton();
+            /*call album names on str1*/
+            String str1 = "     Album " + ctr1;
+            String str2 = "album" + ctr1;
+            /*call artists on str3 */
+            String str3 = "      by: Artist " + ctr1;
+
+            /*creation of album panels*/
+            albumPanels[ctr] = new JPanel();
+            albumHeader[ctr] = new JPanel();
+            albumName[ctr] = new JLabel();
+            albumArtist[ctr] = new JLabel();
+            albumTitle[ctr] = new JPanel();
+            albumHeader[ctr] = new JPanel();
+            songContainer[ctr] = new JPanel();
+            albumPhoto[ctr] = new JLabel();
+            albumSongHeader[ctr] = new JLabel("   SONGS");
+            albumTitle[ctr].setLayout(new GridLayout(6,1));
+            albumHeader[ctr].setLayout(new BoxLayout(albumHeader[ctr], BoxLayout.X_AXIS));
+            songContainer[ctr].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 10));
+            songContainer[ctr].setLayout(new GridLayout(count1+1,1));
+            albumPanels[ctr].setBorder(BorderFactory.createLineBorder(Color.WHITE,10));
+            albumPanels[ctr].setLayout(new BorderLayout());
+            albumPanels[ctr].setBackground(Color.LIGHT_GRAY);
+            albumHeader[ctr].setBackground(Color.LIGHT_GRAY);
+            albumTitle[ctr].setBackground(Color.LIGHT_GRAY);
+            albumSongHeader[ctr].setFont(new Font("Arial", Font.BOLD, 23));
+            songContainer[ctr].add(albumSongHeader[ctr]);
+            /* Album Picture Insertion Here */
+            albumPhoto[ctr].setIcon(scaledAP);
+            albumPhoto[ctr].setBorder(EmptyBorder);
+            albumPhoto[ctr].setHorizontalAlignment(JLabel.CENTER);
+            albumHeader[ctr].add(albumPhoto[ctr]);
+            albumName[ctr].setText(str1);
+            albumName[ctr].setFont(new Font("Arial", Font.BOLD, 28));
+            albumArtist[ctr].setText(str3);
+            albumArtist[ctr].setFont(new Font("Arial", Font.BOLD, 23));
+            albumTitle[ctr].add(albumName[ctr]);
+            albumTitle[ctr].add(albumArtist[ctr]);
+            albumHeader[ctr].add(albumTitle[ctr]);
+            /* Song Insertion for Album Here */
+            for(int ctr2 = 0, ctr3 = 1; ctr2 < count1; ctr2++, ctr3++){
+                /*call album songs on str4 */
+                String str4 = "   " + ctr3 + ".) Song " + ctr3;
+                albumSongs[ctr2] = new JLabel(str4);
+                albumSongs[ctr2].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+                albumSongs[ctr2].setFont(new Font("Arial", Font.BOLD, 16));
+                songContainer[ctr].add(albumSongs[ctr2]);
+            }
+            albumPanels[ctr].add(albumHeader[ctr], BorderLayout.NORTH);
+            albumPanels[ctr].add(songContainer[ctr], BorderLayout.CENTER);
+            /*album panels creation end */
+            
+            cardPanel.add(albumPanels[ctr], str2);
+            albumButton[ctr].setText(str1);
+            albumButton[ctr].setFont(new Font("Arial", Font.ITALIC, 16));
+            albumButton[ctr].setBorder(BorderFactory.createLineBorder(Color.WHITE,2));
+            albumButton[ctr].setHorizontalAlignment(SwingConstants.LEFT);
+            albumButton[ctr].setBackground(new Color(118,113,113,255));
+            albumButton[ctr].setForeground(Color.WHITE);
+            albumButton[ctr].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cl.show(cardPanel, str2);
+                }
+            });
+            albumContainer.add(albumButton[ctr]);
+
+        }
+        albumViewer.add(albumContainer, BorderLayout.CENTER);
+        JScrollPane scrollableArea = new JScrollPane(albumViewer);
+        scrollableArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        cardPanel.add(scrollableArea, "4");
+
+        /*ALbum Viewer Editor End*/
+        
         
         //Adding the cardPanel in the headerPanel
         mainBorderPanel.add(headerPanel, BorderLayout.NORTH);
