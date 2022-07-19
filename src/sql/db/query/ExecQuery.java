@@ -42,7 +42,7 @@ public class ExecQuery {
 
     private String sql = ""; 
 
-    public ExecQuery() throws SQLException {
+    public ExecQuery() {
 
         // Instantiate the already established connection
         this.ok_conn = new EstablishConnection(); 
@@ -102,22 +102,22 @@ public class ExecQuery {
     
     
     // Let us see how we can utilize this class.   
-//    public static void main(String[] args) throws SQLException {
-//        /* Begin, creating an object */
-//        ExecQuery query = new ExecQuery();      
-//        // Remember that once instantiated, it begins to reconnect to the local-host of YOUR MACHINE.
-//        // Because it is where the Jester_DB is hosted
-//        
-//        /** 
-//         * Now, simply we can start creating queries like in SQL
-//         * displayQueryResult() has required parameter of INT type
-//         *   1  is for jester_users
-//         *   2  is for jester_music
-//         */
-//        query.setSQL_statement("SELECT * FROM Jester_DB.jester_users WHERE ID_auth = 100");
-//        query.displayQueryResult(1);
-//        
-//        query.setSQL_statement("SELECT * FROM Jester_DB.jester_music");
-//        query.displayQueryResult(2);
-//    }
+//   public static void main(String[] args) throws SQLException {
+//       /* Begin, creating an object */
+//       ExecQuery query = new ExecQuery();      
+//       // Remember that once instantiated, it begins to reconnect to the local-host of YOUR MACHINE.
+//       // Because it is where the Jester_DB is hosted
+//   
+//       /** 
+//        * Now, simply we can start creating queries like in SQL
+//        * displayQueryResult() has required parameter of INT type
+//        *   1  is for jester_users
+//        *   2  is for jester_music
+//        */
+//       query.setSQL_statement("SELECT * FROM Jester_DB.jester_users WHERE ID_auth = 100");
+//       query.displayQueryResult(1);
+//   
+//       query.setSQL_statement("SELECT * FROM Jester_DB.jester_music");
+//       query.displayQueryResult(2);
+//   }
 }
