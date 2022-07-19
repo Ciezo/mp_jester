@@ -18,7 +18,8 @@ public interface Interface_musichandle {
     public Music [] getMusicArrObj(); 
     public ArrayList<Music> getMusicRecords(); 
     public Music getMusicToPlay(String music_ID); 
+    public void playSound(String music_title, String path); 
+    public void stopSound(); 
     public void add_new_Music(Music music); 
-    public void playSound(String path); 
 
 }
