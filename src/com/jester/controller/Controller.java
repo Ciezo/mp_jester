@@ -33,30 +33,43 @@ public class Controller {
         return handle.getMusicArrObj(); 
     }
     
-    public Music controller_SetMusic(Music music) {
-        music = new Music(); 
-        music.setMusic_title(music.getMusic_title());
-        music.setMusic_artist(music.getMusic_artist());
-        music.setMusic_album(music.getMusic_album());
-        music.setMusic_path_to_DIR(music.getMusic_path_to_DIR());
+    public Music controller_SetMusic(Music insert_music) {
+        // music = new Music(); 
+        insert_music.setMusic_title(insert_music.getMusic_title());
+        insert_music.setMusic_artist(insert_music.getMusic_artist());
+        insert_music.setMusic_album(insert_music.getMusic_album());
+        insert_music.setMusic_path_to_DIR(insert_music.getMusic_path_to_DIR());
         
-        handle.add_new_Music(music);
+        handle.add_new_Music(insert_music);
         
-        return music; 
+        return insert_music; 
     }
     
-    public Object[] controller_GetAllAlbums() {
-        ArrayList<String> albums = new ArrayList<String>();
+    public String[] controller_GetAllAlbums() {
+        String[] albums = new String[5];
         Music[] music_ls; 
         
         music_ls = handle.getMusicArrObj(); 
         
-        for (int i = 0; i < 5; i++) {
-            albums.add(music_ls[i].getMusic_album()); 
-            return (Object []) albums.toArray(new Object[albums.size()]);
+        System.out.println("Retrieving Albums");
+        for (int i = 0; i < music_ls.length; i++) {
+            System.out.println("Retrieved Album: " + music_ls[i].getMusic_album()); 
+            albums[i] = music_ls[i].getMusic_album(); 
+            System.out.println("Assigned Album: " + albums[i]);
         }
-        return (Object []) albums.toArray(new Object[albums.size()]);
+        
+       return albums;
     }
     
-    
+    public Object[] controller_GetAllObjAlbums() {
+        ArrayList<String> music_album = new ArrayList<String>();
+        Music[] music_ls; 
+        
+        music_ls = handle.getMusicArrObj(); 
+        for (int i = 0; i < music_ls.length; i++) {
+            music_album.add(music_ls[i].getMusic_album()); 
+        }
+        
+        return (Object []) music_album.toArray(new Object[music_album.size()]);
+    }
 }
