@@ -53,7 +53,6 @@ public class View {
         //cardPanel.add(albumViewer, "4");
         cardPanel.add(songAdder, "5");
         
-<<<<<<< HEAD
         musicLibrary.setBackground(new Color(217,217,217,255));
         lyricsViewer.setBackground(new Color(217,217,217,255));
         albumViewer.setBackground(new Color(217,217,217,255));
@@ -202,12 +201,10 @@ public class View {
         //holder.add(saveChanges);
         holder.add(songAdderContent);
         songAdder.add(holder, BorderLayout.CENTER);
-=======
         musicLibrary.setBackground(Color.RED);
         lyricsViewer.setBackground(Color.YELLOW);
         albumViewer.setBackground(Color.LIGHT_GRAY);
         songAdder.setBackground(Color.BLACK);
->>>>>>> 31a22789ea283371ac639fa401ad89482cf09a26
         
         /*Main panel default look. This will change based on which button
         is pressed in the sidebar*/
@@ -384,7 +381,6 @@ public class View {
                 }
             });
         playArea.add(vLyrics);
-<<<<<<< HEAD
         
          /*Album Viewer Editor*/
 
@@ -492,9 +488,7 @@ public class View {
         /*ALbum Viewer Editor End*/
         
         
-=======
        
->>>>>>> 31a22789ea283371ac639fa401ad89482cf09a26
         //Adding the cardPanel in the headerPanel
         mainBorderPanel.add(headerPanel, BorderLayout.NORTH);
         mainBorderPanel.add(cardPanel, BorderLayout.CENTER);
