@@ -45,21 +45,17 @@ public class Controller {
         return music; 
     }
     
-    public ArrayList<String> controller_GetAllAlbums() {
-        ArrayList<String> albums = new ArrayList<String>(); 
-        Music[] music_ls = handle.getMusicArrObj(); 
-        String[] add_album = new String[100]; 
-                
-        for (int i = 0; i < music_ls.length; i++) {
-            albums = new ArrayList<String>(); 
-            add_album[i] = music_ls[i].getMusic_album(); 
-            System.out.println("Adding album " + "[" + (i+1) + "]" + add_album[i]);
-            
-            albums.add(add_album.toString()); 
-            return albums;
-        }
+    public Object[] controller_GetAllAlbums() {
+        ArrayList<String> albums = new ArrayList<String>();
+        Music[] music_ls; 
         
-        return albums; 
+        music_ls = handle.getMusicArrObj(); 
+        
+        for (int i = 0; i < 5; i++) {
+            albums.add(music_ls[i].getMusic_album()); 
+            return (Object []) albums.toArray(new Object[albums.size()]);
+        }
+        return (Object []) albums.toArray(new Object[albums.size()]);
     }
     
     

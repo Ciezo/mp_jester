@@ -51,12 +51,11 @@ public class ViewLevelConsole {
                         break; 
                         
                     case "b":
-                        controller.controller_GetAllAlbums(); 
-                        ArrayList<String> albums = new ArrayList<>(); 
+                        Object[] albums;
                         albums = controller.controller_GetAllAlbums();
                         
-                        for (int i = 0; i < albums.size(); i++) {
-                            System.out.println("Album [" + i + "]" + albums.get(i));
+                        for (int i = 0; i < albums.length; i++) {
+                            System.out.println("Album: " + albums[i].toString());
                         }
                         
                         
