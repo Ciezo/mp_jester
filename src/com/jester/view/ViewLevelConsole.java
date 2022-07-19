@@ -22,8 +22,8 @@ public class ViewLevelConsole {
     
     public static void main(String[] args) {
         Controller controller = new Controller(); 
+        Music new_music; 
         Music[] view_music_ls = null;
-        
         
         String opt = ""; 
         Scanner sc = new Scanner(System.in); 
@@ -51,16 +51,55 @@ public class ViewLevelConsole {
                         break; 
                         
                     case "b":
-                        Object[] albums;
-                        albums = controller.controller_GetAllAlbums();
+                        String[] albums = controller.controller_GetAllAlbums(); 
                         
                         for (int i = 0; i < albums.length; i++) {
-                            System.out.println("Album: " + albums[i].toString());
+                            System.out.println("View Album: " + albums[i]);
                         }
                         
+                        Object[] music_album = controller.controller_GetAllAlbums(); 
                         
+                        for (int i = 0; i < albums.length; i++) {
+                            System.out.println("View as OBJECT Album: " + music_album[i].toString());
+                        }
                         
                         break; 
+                    
+                    case "c": 
+                        new_music = new Music(); 
+                        
+                        String user_title; 
+                        String user_artist; 
+                        String user_album; 
+                        String user_path; 
+                        
+                        System.out.print("Enter a music title: ");
+                        user_title = sc.nextLine(); 
+                        
+                        System.out.print("Enter a music artist: ");
+                        user_artist = sc.nextLine(); 
+                        
+                        System.out.print("Enter a music album: ");
+                        user_album = sc.nextLine(); 
+                        
+                        System.out.print("Enter a music path: ");
+                        user_path = sc.nextLine();
+                        
+                        new_music.setMusic_title(user_title);
+                        new_music.setMusic_artist(user_artist);
+                        new_music.setMusic_album(user_album);
+                        new_music.setMusic_path_to_DIR(user_path);
+                        
+                        new_music = new Music(new_music.getMusic_ID(), user_title, user_artist, user_album, user_path);
+                        
+                        controller.controller_SetMusic(new_music); 
+                        
+                        break;
+                        
+                    case "x":
+                        System.exit(1);
+                        
+                        break;
                 }
         }
     }
