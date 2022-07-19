@@ -36,14 +36,23 @@ public class EstablishConnection {
     public EstablishConnection() {
         
         // Database established credentials
-        String user = ""; 
-        String pass = "";
-        Scanner sc = new Scanner(System.in); 
-        
-        System.out.print("Enter user: ");
-        user = sc.nextLine(); 
-        System.out.print("Enter password: ");
-        pass = sc.nextLine(); 
+        /**
+         * @NOTE: 
+         *      Please, if necessary, enter your own user and password in the terminal. 
+         *      By uncommentting the @here block. 
+         *      I currently have the MySQL Server set up on my laptop 
+         *      @Cloyd
+         */
+        //@here BEGIN TERMINAL INPUTS
+//        String user = ""; 
+//        String pass = "";
+//        Scanner sc = new Scanner(System.in); 
+//        
+//        System.out.print("Enter user: ");
+//        user = sc.nextLine(); 
+//        System.out.print("Enter password: ");
+//        pass = sc.nextLine(); 
+        // END TERMINAL INPUTS
         
         // URI
         /**
@@ -57,8 +66,8 @@ public class EstablishConnection {
         try {   
                 // Connection
                 System.out.println("Setting up default connection to " + URI);
-                 conn = DriverManager.getConnection("jdbc:mysql:" + URI, user, pass); 
-//                conn = DriverManager.getConnection("jdbc:mysql:" + URI); 
+                conn = DriverManager.getConnection("jdbc:mysql:" + URI, "root", "cloyd27feb2002"); 
+                // conn = DriverManager.getConnection("jdbc:mysql:" + URI); 
         }
         
         catch(SQLException e) {
