@@ -30,6 +30,10 @@ public class Model {
     ResultSet rs = null;
     
     
+    public Model() {
+        this.connect = new EstablishConnection(); 
+    }
+    
     // This method adds a new music record into the datase
     public void addMusic(Music obj) {
         connect.getConnection();
@@ -149,9 +153,10 @@ public class Model {
                     String fetch_music_ID = rs.getString("music_ID"); ;
                     String fetch_music_title = rs.getString("music_title");
                     String fetch_music_artist = rs.getString("music_artist");
-                    String fetch_music_album = rs.getString("music_artist");
+                    String fetch_music_album = rs.getString("music_album");
                     String fetch_music_path = rs.getString("music_path_to_DIR");
                     
+                    music_as_ls = new Music();
                     music_as_ls.setMusic_ID(fetch_music_ID);
                     music_as_ls.setMusic_title(fetch_music_title);
                     music_as_ls.setMusic_artist(fetch_music_artist);
@@ -160,7 +165,7 @@ public class Model {
                     
                     music_record.add(music_as_ls);
                     
-                    // return (Music []) music_record.toArray(new Music[music_record.size()]);
+//                     return (Music []) music_record.toArray(new Music[music_record.size()]);
                 }
             
             }
@@ -239,7 +244,14 @@ public class Model {
             }
     }
 
-    
+    /**
+     * @NOTE:
+     *      The following commented blocks of code are for testing newly 
+     *      implemented changes to the Model. 
+     *      De-comment these blocks of code to do any sort of testing
+     *      
+     * @Cloyd
+     */
 //   public static void main(String[] args) {
 //       Model model = new Model(); 
 //       Music music;
