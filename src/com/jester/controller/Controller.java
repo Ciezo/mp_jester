@@ -29,11 +29,11 @@ public class Controller {
     }
     
     
-    public Music[] controller_GetAllMusic() {
+    public Music[] GetAllStoredMusic() {
         return handle.getMusicArrObj(); 
     }
     
-    public Music controller_SetMusic(Music insert_music) {
+    public Music SetNewMusic(Music insert_music) {
         // music = new Music(); 
         insert_music.setMusic_title(insert_music.getMusic_title());
         insert_music.setMusic_artist(insert_music.getMusic_artist());
@@ -45,7 +45,7 @@ public class Controller {
         return insert_music; 
     }
     
-    public String[] controller_GetAllAlbums() {
+    public String[] GetAllStoredAlbums() {
         String[] albums = new String[5];
         Music[] music_ls; 
         
@@ -61,7 +61,7 @@ public class Controller {
        return albums;
     }
     
-    public Object[] controller_GetAllObjAlbums() {
+    public Object[] GetAllStoredObjAlbums() {
         ArrayList<String> music_album = new ArrayList<String>();
         Music[] music_ls; 
         

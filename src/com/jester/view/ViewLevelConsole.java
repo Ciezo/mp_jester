@@ -40,7 +40,7 @@ public class ViewLevelConsole {
             
                 switch (opt) {
                     case "a":
-                        view_music_ls = controller.controller_GetAllMusic(); 
+                        view_music_ls = controller.GetAllStoredMusic(); 
                         for (int i = 0; i < view_music_ls.length; i++) {
                             System.out.println("Music Title: " + view_music_ls[i].getMusic_title());
                             System.out.println("Music Artist: " + view_music_ls[i].getMusic_artist());
@@ -51,13 +51,13 @@ public class ViewLevelConsole {
                         break; 
                         
                     case "b":
-                        String[] albums = controller.controller_GetAllAlbums(); 
+                        String[] albums = controller.GetAllStoredAlbums(); 
                         
                         for (int i = 0; i < albums.length; i++) {
                             System.out.println("View Album: " + albums[i]);
                         }
                         
-                        Object[] music_album = controller.controller_GetAllAlbums(); 
+                        Object[] music_album = controller.GetAllStoredAlbums(); 
                         
                         for (int i = 0; i < albums.length; i++) {
                             System.out.println("View as OBJECT Album: " + music_album[i].toString());
@@ -92,7 +92,7 @@ public class ViewLevelConsole {
                         
                         new_music = new Music(new_music.getMusic_ID(), user_title, user_artist, user_album, user_path);
                         
-                        controller.controller_SetMusic(new_music); 
+                        controller.SetNewMusic(new_music); 
                         
                         break;
                         
