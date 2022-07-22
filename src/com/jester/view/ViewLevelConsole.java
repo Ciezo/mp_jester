@@ -181,7 +181,7 @@ public class ViewLevelConsole {
                         break;
                         
                     case "x":
-                        System.exit(1);
+                        System.exit(0);
                         
                         break;
                 }
