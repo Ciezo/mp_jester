@@ -24,6 +24,7 @@ import java.util.Scanner;
 public class Database implements Interface_musichandle {
     
     Model model; 
+    PlayerThread player;
     
     @Override
     public Music[] getMusicArrObj() {
@@ -53,8 +54,7 @@ public class Database implements Interface_musichandle {
     }
 
     @Override
-    public void playSound(String music_title, String path) {
-        PlayerThread player; 
+    public void playSound(String music_title, String path) { 
         player = new PlayerThread(path);
         
         /**
@@ -64,12 +64,12 @@ public class Database implements Interface_musichandle {
         */
         player.start();
         
-        System.out.println("Now Playing..." + music_title);
+        
     }
     
     @Override
     public void stopSound() {
-        PlayerThread player = new PlayerThread(); 
+        System.out.println("Music Stopped!");
         player.close();
     }
     

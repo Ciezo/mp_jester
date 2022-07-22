@@ -23,9 +23,11 @@ public class ViewLevelConsole {
     public static void main(String[] args) {
         Controller controller = new Controller(); 
         Music new_music; 
+        Music play_music;
         Music[] view_music_ls = null;
         
         String opt = ""; 
+        int decision;
         Scanner sc = new Scanner(System.in); 
         while(true) {
             System.out.println("Client Application ");
@@ -39,7 +41,7 @@ public class ViewLevelConsole {
             opt = sc.nextLine();
             
                 switch (opt) {
-                    case "a":
+                    case "a": 
                         view_music_ls = controller.GetAllStoredMusic(); 
                         for (int i = 0; i < view_music_ls.length; i++) {
                             System.out.println("Music Title: " + view_music_ls[i].getMusic_title());
@@ -48,7 +50,89 @@ public class ViewLevelConsole {
                             System.out.println("-----------------------------------------------------");
                         }
                         
-                        break; 
+                                System.out.print("\n\nEnter the music title you want to play: ");
+                                String musicTitleToPlay = sc.nextLine();
+
+                                    switch (musicTitleToPlay) {
+                                        case "Country Roads":
+                                            // controller.play_musicByID("001");
+                                            
+                                            play_music = new Music();
+                                            play_music.setMusic_ID("001");
+                                            controller.setMusicToPlay(play_music);
+                                            
+                                            System.out.print("\t\tEnter 0 to stop music ===>>> ");
+                                            decision = sc.nextInt(); 
+                                            
+                                                if(decision == 0)
+                                                    controller.stop_music();
+                                            decision = 1;
+                                            break;
+                                            
+                                            
+                                        case "Pixel Galaxy":
+                                            // controller.play_musicByID("002");
+
+                                            play_music = new Music();
+                                            play_music.setMusic_ID("002");
+                                            controller.setMusicToPlay(play_music);
+                                            
+                                            System.out.print("\t\tEnter 0 to stop music ===>>> ");
+                                            decision = sc.nextInt(); 
+                                            
+                                                if(decision == 0)
+                                                    controller.stop_music();
+                                            decision = 1;
+                                            break;
+                                        
+                                        case "Twinklestar":
+                                            // controller.play_musicByID("003");
+
+                                            play_music = new Music();
+                                            play_music.setMusic_ID("003");
+                                            controller.setMusicToPlay(play_music);
+                                            
+                                            System.out.print("\t\tEnter 0 to stop music ===>>> ");
+                                            decision = sc.nextInt(); 
+                                            
+                                                if(decision == 0)
+                                                    controller.stop_music();
+                                            decision = 1;
+                                            break;
+                                            
+                                        case "Clair De Lune":
+                                            // controller.play_musicByID("004");
+
+                                            play_music = new Music();
+                                            play_music.setMusic_ID("004");
+                                            controller.setMusicToPlay(play_music);
+                                            
+                                            System.out.print("\t\tEnter 0 to stop music ===>>> ");
+                                            decision = sc.nextInt(); 
+                                            
+                                                if(decision == 0)
+                                                    controller.stop_music();
+                                            decision = 1;
+                                            break;
+                                            
+                                        case "Baka Mitai":
+                                            // controller.play_musicByID("005");
+
+                                            play_music = new Music();
+                                            play_music.setMusic_ID("005");
+                                            controller.setMusicToPlay(play_music);
+                                            
+                                            System.out.print("\t\tEnter 0 to stop music ===>>> ");
+                                            decision = sc.nextInt(); 
+                                            
+                                                if(decision == 0)
+                                                    controller.stop_music();
+                                            decision = 1;
+                                            break;
+                                            
+                                    }
+                        
+                        break;
                         
                     case "b":
                         String[] albums = controller.GetAllStoredAlbums(); 

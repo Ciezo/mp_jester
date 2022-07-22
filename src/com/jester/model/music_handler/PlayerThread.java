@@ -13,7 +13,10 @@ package com.jester.model.music_handler;
 
 
 // IMPORT SECTION
+import com.jester.controller.Controller;
 import java.io.FileInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javazoom.jl.player.*;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 
@@ -21,8 +24,9 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 public class PlayerThread extends Thread{
     
     private AdvancedPlayer player;
-    private FileInputStream audio; 
+    private FileInputStream audio;
     private String music_dir; 
+    private boolean loop; 
     
     public PlayerThread(String music_dir) {
         this.music_dir = music_dir; 
@@ -41,7 +45,7 @@ public class PlayerThread extends Thread{
                 audio = new FileInputStream(music_dir);
                 player = new AdvancedPlayer(audio);
                 player.play();
-            } while (true);
+            } while (loop);
         } 
         
         catch (Exception e) {
@@ -57,6 +61,7 @@ public class PlayerThread extends Thread{
      *        Hence, we need the interrupt() method to forcefully stop it.
     */
     public void close() {
+        loop = false;
         player.close();
         this.interrupt();
     }

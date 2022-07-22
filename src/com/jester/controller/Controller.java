@@ -17,7 +17,11 @@ import com.jester.model.Model;
 import com.jester.model.Database;
 import com.jester.model.music_handler.Interface_musichandle;
 import com.jester.model.music_handler.Music;
+import com.jester.model.music_handler.PlayerThread;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Controller {
@@ -72,4 +76,20 @@ public class Controller {
         
         return (Object []) music_album.toArray(new Object[music_album.size()]);
     }
+    
+    public void setMusicToPlay(Music music) {
+        music = handle.getMusicToPlay(music.getMusic_ID());
+        handle.playSound(music.getMusic_title(), music.getMusic_path_to_DIR());
+    }
+    
+    public void play_musicByID(String music_ID) {
+        Music musicToPlay = new Music();
+        musicToPlay = handle.getMusicToPlay(music_ID); 
+        handle.playSound(musicToPlay.getMusic_title(), musicToPlay.getMusic_path_to_DIR());
+    }
+    
+    public void stop_music() {
+        handle.stopSound();
+    }
+    
 }
