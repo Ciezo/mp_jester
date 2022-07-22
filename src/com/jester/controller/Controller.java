@@ -88,6 +88,13 @@ public class Controller {
         handle.playSound(musicToPlay.getMusic_title(), musicToPlay.getMusic_path_to_DIR());
     }
     
+    public void play_musicByTitle(String music_title) {
+        Model model = new Model();
+        Music musicToPlay = new Music(); 
+        musicToPlay = model.fetchMusicByTitle(music_title); 
+        handle.playSound(music_title, musicToPlay.getMusic_path_to_DIR());
+    }
+    
     public void stop_music() {
         handle.stopSound();
     }

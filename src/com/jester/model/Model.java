@@ -34,6 +34,7 @@ public class Model {
         this.connect = new EstablishConnection(); 
     }
     
+    
     // This method adds a new music record into the datase
     public void addMusic(Music obj) {
         connect.getConnection();
@@ -56,6 +57,7 @@ public class Model {
             }
         
     }
+    
     
     // A method that deletes a music record based on its title
     public void deleteMusic(String music_toRemove) {
@@ -80,7 +82,7 @@ public class Model {
     }
     
     
-    // This returns a specified Music object along with its attributes
+    // This returns a specified Music object along with its attributes identified by using a music ID
     public Music fetchMusic(String music_ID) {
         connect.getConnection();
         String qry = "SELECT * FROM jester_music WHERE music_ID = '"+music_ID+"'"; 
@@ -134,6 +136,61 @@ public class Model {
     }
     
     
+    // This returns a specified Music object along with its attributes by music title
+    public Music fetchMusicByTitle(String music_title) {
+        connect.getConnection();
+        String qry = "SELECT * FROM jester_music WHERE music_title = '"+music_title+"'"; 
+        
+        Music music_fetch = new Music();
+        String fetch_music_ID;
+        String fetch_music_title;
+        String fetch_music_artist;
+        String fetch_music_album;
+        String fetch_music_path;
+        
+            try {
+                statement = connect.getConnection().createStatement();
+                rs = statement.executeQuery(qry);
+                
+                while(rs.next()) {
+                    System.out.println("LOOPING THROUGH THE RECORDS");
+                    fetch_music_ID = rs.getString("music_ID"); 
+                    fetch_music_title = rs.getString("music_title"); 
+                    fetch_music_artist = rs.getString("music_artist"); 
+                    fetch_music_album = rs.getString("music_album"); 
+                    fetch_music_path = rs.getString("music_path_to_DIR"); 
+                    
+                    System.out.println("Selected ID: " + fetch_music_ID);
+                    System.out.println("Fetched Title: " + fetch_music_title);
+                    System.out.println("Fetched Artist: " + fetch_music_artist);
+                    System.out.println("Fetched Album: " + fetch_music_album);
+                    System.out.println("Fetched Path: " + fetch_music_path);
+                    
+                    music_fetch.setMusic_ID(fetch_music_ID);
+                    music_fetch.setMusic_title(fetch_music_title);
+                    music_fetch.setMusic_artist(fetch_music_artist);
+                    music_fetch.setMusic_album(fetch_music_album);
+                    music_fetch.setMusic_path_to_DIR(fetch_music_path);
+                    System.out.println("return");
+                    return music_fetch; 
+                }
+            }
+            
+            catch(SQLException e) {
+                // Print to console the possible cause of error/s
+                String msg = "SQL statement may be incorrect or record/s are existing!";
+                String possible_err_statement = qry; 
+                System.out.println(msg);
+                System.out.println(possible_err_statement);
+                e.printStackTrace();
+            }
+            
+            // return new Music(); 
+            return music_fetch; 
+    }
+    
+    
+    // This method returns an array of objects of Music class. 
     public Music[] view_and_get_MusicRecords() {
         // Declare an array list because we want to return this 
         ArrayList<Music> music_record = new ArrayList<Music>();
@@ -214,16 +271,19 @@ public class Model {
         
         return arr_objs;
     }
-
     
-    // If necessary, we can delete a row from a particular record. Just state the parameters. 
-    /**
-     * 
-     * @param table     this corresponds to the tables: jester_music and jester_user
-     * @param PK_col    this is the Primary KEY column: music_ID and ID_auth
-     * @param PK_val    this is specified value of PK which should correspond to the particular record you want to delete
-     */
+    
     public void deleteRow(String table, String PK_col, String PK_val) {
+        // If necessary, we can delete a row from a particular record. Just state the parameters. 
+        /**
+         *
+         * @param table this corresponds to the tables: jester_music and
+         * jester_user
+         * @param PK_col this is the Primary KEY column: music_ID and ID_auth
+         * @param PK_val this is specified value of PK which should correspond
+         * to the particular record you want to delete
+         */
+        
         connect.getConnection();
         String qry = "DELETE FROM " + table + " WHERE " + PK_col + " = " + PK_val; 
 
