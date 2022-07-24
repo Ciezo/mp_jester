@@ -1,5 +1,20 @@
+/**
+    Authors     : Ron Relayo, Karl Halcon, and Cloyd Secuya
+    Filename   : View.java
+    Package	   : com.jester.view;
+    Date of Creation : June 13, 2022
+    Description:
+        This is the View level where the main user interaction happens. 
+        As such it is where most event handling takes place.
+*/
+
+// PACKAGE SECTION
 package com.jester.view;
 
+
+// IMPORT SECTION
+import com.jester.controller.Controller;
+import com.jester.model.music_handler.Music;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -24,6 +39,12 @@ import javax.swing.table.TableCellRenderer;
 
 public class View {
     private static final Border EmptyBorder = null;
+    
+    static Controller controller = new Controller();
+    static Music[] music_ls; 
+    static Music music; 
+    static DefaultTableModel model = new DefaultTableModel();
+    static String title_play; 
     
     private static void view() {
         //Creates and sets up the title of the frame.
@@ -50,7 +71,7 @@ public class View {
         cardPanel.add(mainPanel, "1");
         cardPanel.add(musicLibrary, "2");
         cardPanel.add(lyricsViewer, "3");
-        //cardPanel.add(albumViewer, "4");
+//        cardPanel.add(albumViewer, "4");
         cardPanel.add(songAdder, "5");
         
         musicLibrary.setBackground(new Color(217,217,217,255));
@@ -60,9 +81,9 @@ public class View {
         
         //Codes for music library
         Object[] columns = {"Titles", "Artists", "Albums"};
-        Object[] row = new Object[3];
+        Object[] row = new Object[50];
         
-        DefaultTableModel model = new DefaultTableModel();
+        model = new DefaultTableModel();
         model.setColumnIdentifiers(columns);
         
         JScrollPane scrollPane = new JScrollPane();
@@ -91,6 +112,19 @@ public class View {
                     ListSelectionModel lsm = (ListSelectionModel) event.getSource();
                     // use the code above as the listener and to find which
                     // row was selected
+                    System.out.println("Row Selected!");
+                    int row_selected = musicTable.getSelectedRow();
+                    System.out.println("Row Index Selected at: " + row_selected);
+                    
+                    String music_val = musicTable.getModel().getValueAt(row_selected,0).toString();
+                    System.out.println("Music Title to be played! " + music_val);
+                    title_play = music_val;
+                    
+                    // A condition to see if the use selected row matches the event selected row
+                    // which is notified by the ListSelectionListener
+                    if (row_selected == musicTable.getSelectedColumn()) {
+                        System.out.println("Current row is selected. READY FOR PLAYING!");
+                    }
                 }
             }
         });
@@ -99,19 +133,19 @@ public class View {
         //Placeholder just to show that musicTable exists and is working
         musicTable.getTableHeader().setBackground(new Color(118,113,113,255));
         for (int i = 0; i < 50; i++) {
-            model.addRow(row);
+//            model.addRow(row);
         }
         
-        /* Back-end developers can utilize this algo to insert the music in the
-        music library.
-        for(int i = 0; i < *all songs*.length; i++) {
-            row[0] = *all songs*()[i].getTitle()
-            row[1] = *all songs*()[i].getArtists()
-            row[2] = *all songs*()[i].getAlbums()
+        // Back-end developers can utilize this algo to insert the music in the music library.
+        music_ls = controller.GetAllStoredMusic(); 
+        for(int i = 0; i < music_ls.length; i++) {
+            row[0] = music_ls[i].getMusic_title();
+            row[1] = music_ls[i].getMusic_artist();
+            row[2] = music_ls[i].getMusic_album();
             
             model.addRow(row);
         }
-        */
+        
         
         //Codes for songAdder UI
         songAdder.setLayout(new BorderLayout());
@@ -169,6 +203,7 @@ public class View {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    // @TODO - Add newly inserted records here
                     //Insert the code here to save the changes and add the music to
                     //your music library.
                     Thread.sleep(250);
@@ -176,11 +211,36 @@ public class View {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                musicTextField.setText(null);
-                artistTextField.setText(null);
-                albumTextField.setText(null);
-                pathTextField.setText(null);
-                lyricsTextField.setText(null);
+                
+                // Start generating unique ID
+                music = new Music();  
+                // Placeholders for attributes in music
+                String new_music_title = musicTextField.getText(); 
+                String new_music_artist = artistTextField.getText(); 
+                String new_music_album = albumTextField.getText(); 
+                String new_music_path = pathTextField.getText(); 
+                String new_lyric_path = lyricsTextField.getText();
+                
+                System.out.println("Saved Changes!");
+                System.out.println("=============================");
+                System.out.println("Music title: " + new_music_title);
+                System.out.println("Music artist: " + new_music_artist);
+                System.out.println("Music album: " + new_music_album);
+                System.out.println("Path file: " + new_music_path);
+                System.out.println("Lyric file: " + new_lyric_path);
+                System.out.println("=============================");
+                
+                // Set up and assign the rest of the attributes
+                music.setMusic_title(new_music_title);
+                music.setMusic_artist(new_music_artist);
+                music.setMusic_album(new_music_album);
+                music.setMusic_path_to_DIR(new_music_path);
+                // Final instantiate to attributes
+                music = new Music(music.getMusic_ID(), new_music_title, new_music_artist, new_music_album, new_music_path);
+                // Call the controller to insert the records
+                controller.SetNewMusic(music);
+                // Refresh the library for new contents
+                music_lib_refresher(music.getMusic_title(), music.getMusic_artist(), music.getMusic_album()); 
             }
             
         });
@@ -201,10 +261,10 @@ public class View {
         //holder.add(saveChanges);
         holder.add(songAdderContent);
         songAdder.add(holder, BorderLayout.CENTER);
-        musicLibrary.setBackground(Color.RED);
-        lyricsViewer.setBackground(Color.YELLOW);
-        albumViewer.setBackground(Color.LIGHT_GRAY);
-        songAdder.setBackground(Color.BLACK);
+//        musicLibrary.setBackground(Color.RED);
+//        lyricsViewer.setBackground(Color.YELLOW);
+//        albumViewer.setBackground(Color.LIGHT_GRAY);
+//        songAdder.setBackground(Color.BLACK);
         
         /*Main panel default look. This will change based on which button
         is pressed in the sidebar*/
@@ -303,7 +363,7 @@ public class View {
         albumPic.setHorizontalAlignment(JLabel.CENTER);
         playArea.add(albumPic);
         //TODO: Scrolling when hovered on
-        JLabel nowPlaying = new JLabel("Now Playing: <music title>");
+        JLabel nowPlaying = new JLabel("Play some music!");
         
         /*TODO: Get the title from the controller and create an if statement
         when the music stops */
@@ -325,20 +385,33 @@ public class View {
         ImageIcon scaledSB = new ImageIcon(SBscale);
         ImageIcon scaledPB = new ImageIcon(PBscale);
         playButtonContainer.setIcon(scaledPB);
+        
+        // TODO: Play and Stop music button
         playButtonContainer.addMouseListener(new MouseAdapter() {
             private boolean playing = false;
             @Override
             public void mouseClicked(MouseEvent e) {
+                String to_play = getTitleVal();
                 if(playing) {
                     playButtonContainer.setIcon(scaledSB);
-                    nowPlaying.setText("Now Playing: <music title>");
-                } else if (!playing) {
+                    nowPlaying.setText("Now Playing: " + to_play);
+                    
+                    controller.play_musicByTitle(to_play);
+                } 
+                
+                else if (!playing) {
                     playButtonContainer.setIcon(scaledPB);
                     nowPlaying.setText("Music Stopped");
+                    
+                    try {
+                        controller.stop_music();
+                    }
+                    catch(Exception err) {err.printStackTrace();}
                 }
                 playing = !playing;
             }
         });
+        
         playArea.add(playButtonContainer);
         
         /*JButton for viewing the lyrics, in here is also the code for the lyrics
@@ -353,7 +426,7 @@ public class View {
         vLyrics.setAlignmentX(Component.CENTER_ALIGNMENT);
             vLyrics.addActionListener(new ActionListener() {
                 private boolean viewing = false;
-                JTextArea lyrics = new JTextArea(25, 62);
+                JTextArea lyrics = new JTextArea(25, 50);
                 JScrollPane scrollPane = new JScrollPane(lyrics);
                 public void actionPerformed(ActionEvent e) {
                     if (viewing == true) {
@@ -366,9 +439,46 @@ public class View {
                         //Place case here based on which music is playing.
                         //TODO: dynamically changes based on which music is playing.
                             try {
-                                lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("LYR_bakamitai_LYRICS.txt"))), null);
-                                lyrics.setBackground(new Color(118,113,113,255));
-                                lyrics.setForeground(Color.WHITE);
+                                String fetch_curr_title_play = getTitleVal();
+                                System.out.println("Lyrics to view: " + fetch_curr_title_play);
+                                switch(fetch_curr_title_play) {
+                                    case "Baka Mitai":
+                                        lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("LYR_bakamitai_LYRICS.txt"))), null);
+                                        lyrics.setBackground(new Color(118,113,113,255));
+                                        lyrics.setForeground(Color.WHITE);
+                                        
+                                        break;
+                                        
+                                    case "Country Roads":
+                                        lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("LYR_countryroads_LYRICS.txt"))), null);
+                                        lyrics.setBackground(new Color(118, 113, 113, 255));
+                                        lyrics.setForeground(Color.WHITE);
+                                        break;
+                                        
+                                    case "Clair De Lune":
+                                        lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("LYR_clairedelune_LYRICS.txt"))), null);
+                                        lyrics.setBackground(new Color(118,113,113,255));
+                                        lyrics.setForeground(Color.WHITE);
+                                        break;
+                                        
+                                    case "Pixel Galaxy":
+                                        lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("LYR_pixelgalaxy_LYRICS.txt"))), null);
+                                        lyrics.setBackground(new Color(118, 113, 113, 255));
+                                        lyrics.setForeground(Color.WHITE);
+                                        break;
+                                        
+                                    case "Twinklestar":
+                                        lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("LYR_twinkelstar_LYRICS.txt"))), null);
+                                        lyrics.setBackground(new Color(118, 113, 113, 255));
+                                        lyrics.setForeground(Color.WHITE);
+                                        break;
+                                    
+                                    default:
+                                        lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream(""))), null);
+                                        lyrics.setBackground(new Color(118, 113, 113, 255));
+                                        lyrics.setForeground(Color.WHITE);
+                                        break;
+                                }
                             } catch (IOException ex) {
                                 Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -383,11 +493,16 @@ public class View {
         playArea.add(vLyrics);
         
          /*Album Viewer Editor*/
-
+         // Fetched all stored albums using controller
+         String[] albums_ls = controller.GetAllStoredAlbums(); 
+         int size = albums_ls.length;
+         System.out.println("Size " + size);
         /*Value of the number of rows in the album column to be put in the int count */
-        int count = 8;
+        int count = size;
         /*Value of the number of songs in the album */
-        int count1 = 10;
+        int size2 = music_ls.length;
+        int count1 = size2;
+        count = size2;
         JPanel albumPanels[] = new JPanel[count];
         JPanel albumHeader[] = new JPanel[count];
         JPanel albumTitle[] = new JPanel[count];
@@ -408,15 +523,19 @@ public class View {
         albumContainer.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 10));
         albumContainer.setLayout(new GridLayout(count,1));
         albumViewer.add(albumLabel, BorderLayout.NORTH);
-
-        /*dynamic for loop. */
+        
+        // @TODO - List all albums form 
+        /*dynamic for loop. */ 
         for(int ctr = 0,ctr1 = 1; ctr < count; ctr++,ctr1++){
+            // Test to fetch out the albums list using the controller
+            System.out.println("Fetched Albums Lists: " + albums_ls[ctr]);
+            
             albumButton[ctr] = new JButton();
             /*call album names on str1*/
-            String str1 = "     Album " + ctr1;
+            String str1 = "   " + albums_ls[ctr];       // Album Buttons where it is fetched from the database
             String str2 = "album" + ctr1;
             /*call artists on str3 */
-            String str3 = "      by: Artist " + ctr1;
+            String str3 = "      by: Artist " + music_ls[ctr].getMusic_artist();
 
             /*creation of album panels*/
             albumPanels[ctr] = new JPanel();
@@ -440,6 +559,7 @@ public class View {
             albumSongHeader[ctr].setFont(new Font("Arial", Font.BOLD, 23));
             songContainer[ctr].add(albumSongHeader[ctr]);
             /* Album Picture Insertion Here */
+            // @TODO - Set different album icons 
             albumPhoto[ctr].setIcon(scaledAP);
             albumPhoto[ctr].setBorder(EmptyBorder);
             albumPhoto[ctr].setHorizontalAlignment(JLabel.CENTER);
@@ -454,7 +574,7 @@ public class View {
             /* Song Insertion for Album Here */
             for(int ctr2 = 0, ctr3 = 1; ctr2 < count1; ctr2++, ctr3++){
                 /*call album songs on str4 */
-                String str4 = "   " + ctr3 + ".) Song " + ctr3;
+                String str4 = "   " + ctr3 + ".)  " + music_ls[ctr2].getMusic_title();
                 albumSongs[ctr2] = new JLabel(str4);
                 albumSongs[ctr2].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
                 albumSongs[ctr2].setFont(new Font("Arial", Font.BOLD, 16));
@@ -504,6 +624,23 @@ public class View {
         frame.pack();
         frame.setVisible(true);
     } 
+    
+    private static void music_lib_refresher(String music_title, String music_artist, String music_album) {
+        Object[] row = new Object[50];
+        music_ls = controller.GetAllStoredMusic(); 
+        // Insert the new record to the table model ONE TIME ONLY! 
+        for(int i = 0; i < 1; i++) {
+            row[0] = music_title; 
+            row[1] = music_artist; 
+            row[2] = music_album; 
+            
+            model.addRow(row);
+        }
+    }
+    
+    private static String getTitleVal() {
+        return title_play;
+    }
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(View::view);
