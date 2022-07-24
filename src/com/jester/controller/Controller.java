@@ -50,7 +50,7 @@ public class Controller {
     }
     
     public String[] GetAllStoredAlbums() {
-        String[] albums = new String[5];
+        String[] albums = new String[1000];
         Music[] music_ls; 
         
         music_ls = handle.getMusicArrObj(); 
