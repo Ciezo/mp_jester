@@ -1,7 +1,7 @@
 /**
     Author     : Cloyd Van S. Secuya and Nadrin Caluya
     Filename   : Music.java
-    Package	   : com.jester.model;
+    Package	   : com.jester.model.music_handler;
     Date of Creation : June 14, 2022
     Description:
     	The Music class contains and corresponds to the attributes of the following: 
