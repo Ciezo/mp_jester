@@ -240,7 +240,8 @@ public class View {
                 // Call the controller to insert the records
                 controller.SetNewMusic(music);
                 // Refresh the library for new contents
-                music_lib_refresher(music.getMusic_title(), music.getMusic_artist(), music.getMusic_album()); 
+                music_lib_refresher(music.getMusic_title(), music.getMusic_artist(), music.getMusic_album());
+                albumViewer.repaint();
             }
             
         });
@@ -496,6 +497,7 @@ public class View {
          // Fetched all stored albums using controller
          String[] albums_ls = controller.GetAllStoredAlbums(); 
          int size = albums_ls.length;
+        // System.out.println("asdasdasd"+albums_ls);
          System.out.println("Size " + size);
         /*Value of the number of rows in the album column to be put in the int count */
         int count = size;
@@ -527,6 +529,7 @@ public class View {
         // @TODO - List all albums form 
         /*dynamic for loop. */ 
         for(int ctr = 0,ctr1 = 1; ctr < count; ctr++,ctr1++){
+            // System.out.println(music_ls[ctr].getMusic_album());
             // Test to fetch out the albums list using the controller
             System.out.println("Fetched Albums Lists: " + albums_ls[ctr]);
             
@@ -558,6 +561,7 @@ public class View {
             albumTitle[ctr].setBackground(Color.LIGHT_GRAY);
             albumSongHeader[ctr].setFont(new Font("Arial", Font.BOLD, 23));
             songContainer[ctr].add(albumSongHeader[ctr]);
+            
             /* Album Picture Insertion Here */
             // @TODO - Set different album icons 
             albumPhoto[ctr].setIcon(scaledAP);
@@ -572,13 +576,21 @@ public class View {
             albumTitle[ctr].add(albumArtist[ctr]);
             albumHeader[ctr].add(albumTitle[ctr]);
             /* Song Insertion for Album Here */
+            
+          
             for(int ctr2 = 0, ctr3 = 1; ctr2 < count1; ctr2++, ctr3++){
                 /*call album songs on str4 */
                 String str4 = "   " + ctr3 + ".)  " + music_ls[ctr2].getMusic_title();
-                albumSongs[ctr2] = new JLabel(str4);
-                albumSongs[ctr2].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
-                albumSongs[ctr2].setFont(new Font("Arial", Font.BOLD, 16));
-                songContainer[ctr].add(albumSongs[ctr2]);
+                String alName = music_ls[ctr2].getMusic_album();
+              String alText=music_ls[ctr].getMusic_album();
+                if( alName.equals(alText))
+                {
+                    albumSongs[ctr2] = new JLabel(str4);
+                    albumSongs[ctr2].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+                    albumSongs[ctr2].setFont(new Font("Arial", Font.BOLD, 16));
+                    songContainer[ctr].add(albumSongs[ctr2]);
+               }
+               
             }
             albumPanels[ctr].add(albumHeader[ctr], BorderLayout.NORTH);
             albumPanels[ctr].add(songContainer[ctr], BorderLayout.CENTER);
@@ -637,7 +649,10 @@ public class View {
             model.addRow(row);
         }
     }
-    
+    private static void updateViewer() {
+        
+       
+    }
     private static String getTitleVal() {
         return title_play;
     }
