@@ -207,7 +207,7 @@ public class View {
                     //Insert the code here to save the changes and add the music to
                     //your music library.
                     Thread.sleep(250);
-                    JOptionPane.showMessageDialog(null, "Changes Saved", "Confirmation", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Restarting to apply changes", "Changes Saved", JOptionPane.PLAIN_MESSAGE);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -241,7 +241,9 @@ public class View {
                 controller.SetNewMusic(music);
                 // Refresh the library for new contents
                 music_lib_refresher(music.getMusic_title(), music.getMusic_artist(), music.getMusic_album());
-                albumViewer.repaint();
+                main(null);
+                frame.dispose();;
+                
             }
             
         });
