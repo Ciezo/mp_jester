@@ -242,7 +242,7 @@ public class View {
                 // Refresh the library for new contents
                 music_lib_refresher(music.getMusic_title(), music.getMusic_artist(), music.getMusic_album());
                 main(null);
-                frame.dispose();;
+                frame.dispose();
                 
             }
             
