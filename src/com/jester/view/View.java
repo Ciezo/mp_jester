@@ -1,5 +1,5 @@
 /**
-    Authors     : Ron Relayo, Karl Halcon, and Cloyd Secuya
+    Authors     : Ron Relayo, Karl Halcon, Cloyd Secuya, and Nadrin Caluya
     Filename   : View.java
     Package	   : com.jester.view;
     Date of Creation : June 13, 2022
@@ -46,6 +46,12 @@ public class View {
     static DefaultTableModel model = new DefaultTableModel();
     static String title_play; 
     
+    /*Declaration of the panels that will be placed inside the card layout
+    and navigated through based on user interaction.*/
+    static CardLayout cl = new CardLayout();
+    static JPanel cardPanel = new JPanel();
+    static JPanel albumViewer = new JPanel();
+    
     private static void view() {
         //Creates and sets up the title of the frame.
         JFrame frame = new JFrame("Jester's Tavern");
@@ -53,11 +59,7 @@ public class View {
         //URL to get resource
         URL url = null;
         
-        /*Declaration of the panels that will be placed inside the card layout
-        and navigated through based on user interaction.*/
-        CardLayout cl = new CardLayout();
-        
-        JPanel cardPanel = new JPanel();
+        // Setting the layou with CardPanel manager
         cardPanel.setLayout(cl);
         
         JPanel headerPanel = new JPanel();
@@ -65,7 +67,6 @@ public class View {
         JPanel mainPanel = new JPanel();
         JPanel musicLibrary = new JPanel();
         JPanel lyricsViewer = new JPanel();
-        JPanel albumViewer = new JPanel();
         JPanel songAdder = new JPanel();
         
         cardPanel.add(mainPanel, "1");
@@ -217,7 +218,7 @@ public class View {
                     //Insert the code here to save the changes and add the music to
                     //your music library.
                     Thread.sleep(250);
-                    JOptionPane.showMessageDialog(null, "Changes Saved", "Confirmation", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Restarting application to apply changes", "Changes Saved", JOptionPane.PLAIN_MESSAGE);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -251,6 +252,10 @@ public class View {
                 controller.SetNewMusic(music);
                 // Refresh the library for new contents
                 music_lib_refresher(music.getMusic_title(), music.getMusic_artist(), music.getMusic_album()); 
+                // Add the newly listed album to the album viewer
+                // Restart the main window and discard the old window to apply local changes
+                main(null);
+                frame.dispose();
             }
             
         });
@@ -278,7 +283,7 @@ public class View {
         
         /*Main panel default look. This will change based on which button
         is pressed in the sidebar*/
-        JLabel header = new JLabel("Main Panel");
+        JLabel header = new JLabel("Welcome to Jester's Tavern!");
         header.setFont(new Font("Arial", Font.BOLD, 28));
         header.setForeground(Color.WHITE);
         
@@ -297,7 +302,7 @@ public class View {
         url = View.class.getResource("assets/logo.png");
         ImageIcon logoImg = new ImageIcon(url);
         Image LG = logoImg.getImage();
-        Image LGscale = LG.getScaledInstance(100, 65, Image.SCALE_SMOOTH);
+        Image LGscale = LG.getScaledInstance(80, 45, Image.SCALE_SMOOTH);
         ImageIcon scaledLG = new ImageIcon(LGscale);
         logo.setIcon(scaledLG);
         logo.setBorder(EmptyBorder);
@@ -305,7 +310,7 @@ public class View {
         logo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                header.setText("Main Panel");
+                header.setText("Welcome to Jester's Tavern!");
                 cl.show(cardPanel, "1");
             }
         });
@@ -363,10 +368,10 @@ public class View {
         
         //This is the picture of the album.
         JLabel albumPic = new JLabel();
-        url = View.class.getResource("assets/logo.png");
+        url = View.class.getResource("assets/logo2.png");
         ImageIcon albumImg = new ImageIcon(url);
         Image AP = albumImg.getImage();
-        Image APscale = AP.getScaledInstance(100, 65, Image.SCALE_SMOOTH);
+        Image APscale = AP.getScaledInstance(50, 45, Image.SCALE_SMOOTH);
         ImageIcon scaledAP = new ImageIcon(APscale);
         albumPic.setIcon(scaledAP);
         albumPic.setBorder(EmptyBorder);
@@ -390,8 +395,8 @@ public class View {
         ImageIcon stopButton = new ImageIcon(url);
         Image PB = playButton.getImage();
         Image SB = stopButton.getImage();
-        Image PBscale = PB.getScaledInstance(65, 65, Image.SCALE_SMOOTH);
-        Image SBscale = SB.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        Image PBscale = PB.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        Image SBscale = SB.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         ImageIcon scaledSB = new ImageIcon(SBscale);
         ImageIcon scaledPB = new ImageIcon(PBscale);
         playButtonContainer.setIcon(scaledPB);
@@ -568,6 +573,7 @@ public class View {
             albumTitle[ctr].setBackground(Color.LIGHT_GRAY);
             albumSongHeader[ctr].setFont(new Font("Arial", Font.BOLD, 23));
             songContainer[ctr].add(albumSongHeader[ctr]);
+            
             /* Album Picture Insertion Here */
             // @TODO - Set different album icons 
             albumPhoto[ctr].setIcon(scaledAP);
@@ -585,10 +591,15 @@ public class View {
             for(int ctr2 = 0, ctr3 = 1; ctr2 < count1; ctr2++, ctr3++){
                 /*call album songs on str4 */
                 String str4 = "   " + ctr3 + ".)  " + music_ls[ctr2].getMusic_title();
-                albumSongs[ctr2] = new JLabel(str4);
-                albumSongs[ctr2].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
-                albumSongs[ctr2].setFont(new Font("Arial", Font.BOLD, 16));
-                songContainer[ctr].add(albumSongs[ctr2]);
+                String alName = music_ls[ctr2].getMusic_album();
+                String alText = music_ls[ctr].getMusic_album();
+                
+                if (alName.equals(alText)) {
+                    albumSongs[ctr2] = new JLabel(str4);
+                    albumSongs[ctr2].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+                    albumSongs[ctr2].setFont(new Font("Arial", Font.BOLD, 16));
+                    songContainer[ctr].add(albumSongs[ctr2]);
+                }
             }
             albumPanels[ctr].add(albumHeader[ctr], BorderLayout.NORTH);
             albumPanels[ctr].add(songContainer[ctr], BorderLayout.CENTER);
