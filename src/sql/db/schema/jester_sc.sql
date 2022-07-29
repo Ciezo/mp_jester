@@ -49,5 +49,5 @@ CREATE TABLE Jester_DB.jester_music
     music_title         VARCHAR(150)    NOT NULL, 
     music_artist        VARCHAR(150)    NOT NULL,
     music_album         VARCHAR(150)    NOT NULL,
-    music_path_to_DIR   VARCHAR(150)    NOT NULL, 
+    music_path_to_DIR   VARCHAR(150)    NOT NULL
 );
