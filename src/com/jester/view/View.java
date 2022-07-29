@@ -79,6 +79,16 @@ public class View {
         albumViewer.setBackground(new Color(217,217,217,255));
         songAdder.setBackground(new Color(217,217,217,255));
         
+        //Codes for main panel.
+        mainPanel.setLayout(new GridBagLayout());
+        url = View.class.getResource("assets/listening-to-music-jake.gif");
+        Icon icon = new ImageIcon(url);
+        JLabel mainPanelContent = new JLabel(icon);
+        mainPanelContent.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanelContent.setHorizontalAlignment(JLabel.WHEN_FOCUSED);
+        mainPanel.setBackground(Color.BLACK);
+        mainPanel.add(mainPanelContent);
+        
         //Codes for music library
         Object[] columns = {"Titles", "Artists", "Albums"};
         Object[] row = new Object[50];
@@ -430,9 +440,9 @@ public class View {
                 JScrollPane scrollPane = new JScrollPane(lyrics);
                 public void actionPerformed(ActionEvent e) {
                     if (viewing == true) {
-                        header.setText("Main Panel");
+                        header.setText("Music Library");
                         vLyrics.setText("View Lyrics");
-                        cl.show(cardPanel, "1");
+                        cl.show(cardPanel, "2");
                     } else if (!viewing) {
                         header.setText("View Lyrics");
                         vLyrics.setText("Close Lyrics");
