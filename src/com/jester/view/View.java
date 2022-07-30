@@ -456,8 +456,12 @@ public class View {
                             try {
                                 String fetch_curr_title_play = getTitleVal();
                                 String display_lyrics = controller.GetLyricsPath(fetch_curr_title_play);
+                                String[] path_split = display_lyrics.split("/", 4);
                                 System.out.println("Lyrics to view: " + fetch_curr_title_play);
                                 System.out.println("Lyrical content path: " + display_lyrics);
+                                System.out.println("\n\nTEXT FILE ITSELF");
+                                System.out.println("\t===>>>" + path_split[3]);
+                                
                                 switch(fetch_curr_title_play) {
                                     case "Baka Mitai":
                                         lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("LYR_bakamitai_LYRICS.txt"))), null);
@@ -491,7 +495,16 @@ public class View {
                                         break;
                                     
                                     default:
-                                        lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream(display_lyrics))), null);
+                                        // Split up the path to get the FILE ITSELF
+                                        System.out.println("AFTER SPLIT");
+                                        for (int i = 0; i < path_split.length; i++) {
+                                            System.out.println(path_split[i]);
+                                        }
+                                        
+                                        System.out.println("\n\nTEXT FILE ITSELF");
+                                        System.out.println("\t===>>>" + path_split[3]);
+                                        
+                                        lyrics.read(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream(path_split[3]))), null);
                                         lyrics.setBackground(new Color(118, 113, 113, 255));
                                         lyrics.setForeground(Color.WHITE);
                                         break;

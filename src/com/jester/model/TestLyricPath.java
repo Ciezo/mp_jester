@@ -1,6 +1,20 @@
+/**
+    Authors     : Cloyd Secuya
+    Filename   : TestLyricPath.java
+    Package	   : com.jester.model;
+    Date of Creation : June 30, 2022
+    Description:
+        This is the source class file that can be run in its own isolated run time
+        and thread. 
+        
+        We can use this class to test the retrieval of the lyric file path in the 
+        View directory
+*/
 
+// PACKAGE SECTION
 package com.jester.model;
 
+// IMPORT SECTION
 import com.jester.controller.Controller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
