@@ -52,7 +52,15 @@ public class Database implements Interface_musichandle {
         
         return musicToPlay;
     }
-
+    
+    @Override 
+    public String getLyricContentPath(String music_title) {
+        model = new Model();
+        String fetch_path_lyric = model.fetchLyricContent(music_title); 
+        
+        return fetch_path_lyric;
+    }
+    
     @Override
     public void playSound(String music_title, String path) { 
         player = new PlayerThread(path);

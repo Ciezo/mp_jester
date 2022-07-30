@@ -43,6 +43,7 @@ public class Controller {
         insert_music.setMusic_artist(insert_music.getMusic_artist());
         insert_music.setMusic_album(insert_music.getMusic_album());
         insert_music.setMusic_path_to_DIR(insert_music.getMusic_path_to_DIR());
+        insert_music.setLyric_path_to_DIR(insert_music.getLyric_path_to_DIR());
         
         handle.add_new_Music(insert_music);
         
@@ -63,6 +64,13 @@ public class Controller {
         }
         
        return albums;
+    }
+    
+    public String GetLyricsPath(String fetch_lyrics) {
+        String lyrics_path;  
+        lyrics_path = handle.getLyricContentPath(fetch_lyrics);
+        
+        return lyrics_path;
     }
     
     public Object[] GetAllStoredObjAlbums() {
