@@ -73,6 +73,7 @@ public class Database implements Interface_musichandle {
         player.start();
         
         System.out.println("Now, Playing... " + music_title);
+        System.out.println("Music path... ==> " + path);
     }
     
     @Override
