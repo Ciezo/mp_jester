@@ -184,6 +184,10 @@ public class View {
         music_path.setFont(new Font("Arial", Font.PLAIN, 20));
         lyrics_path.setFont(new Font("Arial", Font.PLAIN, 20));
         
+        // Set up placeholders for adding the paths
+        pathTextField.setText("src/music_dir/<Enter your music here>.mp3");
+        lyricsTextField.setText("src/com/view/<Enter your lyrics here>.txt");
+        
         saveChanges.setBackground(new Color(118, 113, 113, 255));
         saveChanges.setFocusable(false);
         saveChanges.setFont(new Font("Arial", Font.PLAIN, 20));
