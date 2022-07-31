@@ -361,6 +361,11 @@ public class View {
             public void actionPerformed(ActionEvent e) {
                 header.setText("Add Songs");
                 cl.show(cardPanel, "5");
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(null, "Place your .mp3 files into the src/music_dir folder", "NOTICE!", JOptionPane.INFORMATION_MESSAGE);
+                try {Thread.sleep(300);} catch (InterruptedException ex) {ex.printStackTrace();}
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(null, "Place your .txt files into the src/com/view folder", "NOTICE!", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         sideBar.add(aSong);
