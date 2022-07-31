@@ -27,11 +27,12 @@ public class Music {
     private String music_artist;
     private String music_album;
     private String music_path_to_DIR;
+    private String lyric_path_to_DIR;
 
     // Alphanumeric key generator
     CodeGen generatePK = new CodeGen(); 
     
-    public Music(String ID, String music_title, String music_artist, String music_album, String music_path_to_DIR) {
+    public Music(String ID, String music_title, String music_artist, String music_album, String music_path_to_DIR, String lyric_path_to_DIR) {
         // Start setting up RGN to be mixed with String builder
         generatePK.setRGN();
         // Assign the generated alphanumeric key maximum with 5 characters
@@ -41,6 +42,7 @@ public class Music {
         this.music_artist = music_artist;
         this.music_album = music_album;
         this.music_path_to_DIR = music_path_to_DIR;
+        this.lyric_path_to_DIR = lyric_path_to_DIR;
     }
     
     // Default Constructor
@@ -90,5 +92,12 @@ public class Music {
     public void setMusic_path_to_DIR(String music_path_to_DIR) {
         this.music_path_to_DIR = music_path_to_DIR;
     }
-
+    
+    public void setLyric_path_to_DIR(String lyric_path_to_DIR) {
+        this.lyric_path_to_DIR = lyric_path_to_DIR; 
+    }
+    
+    public String getLyric_path_to_DIR() {
+        return lyric_path_to_DIR;
+    }
 }

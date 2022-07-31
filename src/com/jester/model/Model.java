@@ -38,7 +38,7 @@ public class Model {
     // This method adds a new music record into the datase
     public void addMusic(Music obj) {
         connect.getConnection();
-        String qry = "INSERT INTO jester_music(music_ID, music_title, music_artist, music_album, music_path_to_DIR) VALUES ROW('"+obj.getMusic_ID()+"','"+obj.getMusic_title()+"','"+ obj.getMusic_artist()+"','"+ obj.getMusic_album()+"','"+obj.getMusic_path_to_DIR()+"')"; 
+        String qry = "INSERT INTO jester_music(music_ID, music_title, music_artist, music_album, music_path_to_DIR, lyric_path_to_DIR) VALUES ROW('"+obj.getMusic_ID()+"','"+obj.getMusic_title()+"','"+ obj.getMusic_artist()+"','"+ obj.getMusic_album()+"','"+obj.getMusic_path_to_DIR()+"','"+obj.getLyric_path_to_DIR()+"')"; 
         
             try {
                 statement = connect.getConnection().createStatement();
@@ -93,6 +93,7 @@ public class Model {
         String fetch_music_artist;
         String fetch_music_album;
         String fetch_music_path;
+        String fetch_lyric_path;
         
             try {
                 statement = connect.getConnection().createStatement();
@@ -105,18 +106,21 @@ public class Model {
                     fetch_music_artist = rs.getString("music_artist"); 
                     fetch_music_album = rs.getString("music_album"); 
                     fetch_music_path = rs.getString("music_path_to_DIR"); 
+                    fetch_lyric_path = rs.getString("lyric_path_to_DIR");
                     
                     System.out.println("Selected ID: " + fetch_music_ID);
                     System.out.println("Fetched Title: " + fetch_music_title);
                     System.out.println("Fetched Artist: " + fetch_music_artist);
                     System.out.println("Fetched Album: " + fetch_music_album);
                     System.out.println("Fetched Path: " + fetch_music_path);
+                    System.out.println("Lyrics Path: " + fetch_lyric_path);
                     
                     music_fetch.setMusic_ID(fetch_music_ID);
                     music_fetch.setMusic_title(fetch_music_title);
                     music_fetch.setMusic_artist(fetch_music_artist);
                     music_fetch.setMusic_album(fetch_music_album);
                     music_fetch.setMusic_path_to_DIR(fetch_music_path);
+                    music_fetch.setLyric_path_to_DIR(fetch_lyric_path);
                     System.out.println("return");
                     return music_fetch; 
                 }
@@ -147,6 +151,7 @@ public class Model {
         String fetch_music_artist;
         String fetch_music_album;
         String fetch_music_path;
+        String fetch_lyric_path;
         
             try {
                 statement = connect.getConnection().createStatement();
@@ -159,18 +164,21 @@ public class Model {
                     fetch_music_artist = rs.getString("music_artist"); 
                     fetch_music_album = rs.getString("music_album"); 
                     fetch_music_path = rs.getString("music_path_to_DIR"); 
+                    fetch_lyric_path = rs.getString("lyric_path_to_DIR");
                     
                     System.out.println("Selected ID: " + fetch_music_ID);
                     System.out.println("Fetched Title: " + fetch_music_title);
                     System.out.println("Fetched Artist: " + fetch_music_artist);
                     System.out.println("Fetched Album: " + fetch_music_album);
                     System.out.println("Fetched Path: " + fetch_music_path);
+                    System.out.println("Lyrics Path: " + fetch_lyric_path);
                     
                     music_fetch.setMusic_ID(fetch_music_ID);
                     music_fetch.setMusic_title(fetch_music_title);
                     music_fetch.setMusic_artist(fetch_music_artist);
                     music_fetch.setMusic_album(fetch_music_album);
                     music_fetch.setMusic_path_to_DIR(fetch_music_path);
+                    music_fetch.setLyric_path_to_DIR(fetch_lyric_path);
                     System.out.println("return");
                     return music_fetch; 
                 }
@@ -189,6 +197,40 @@ public class Model {
             return music_fetch; 
     }
     
+    // This method returns the lyrics content path by using the music title 
+    public String fetchLyricContent(String music_title) {
+        connect.getConnection();
+        String qry = "SELECT lyric_path_to_DIR FROM jester_music WHERE music_title = '"+music_title+"'";
+        // Assign a returning variable for the path
+        String fetch_lyric_path = "";
+        
+            try {
+                statement = connect.getConnection().createStatement();
+                rs = statement.executeQuery(qry);
+                System.out.println("SELECT STATEMENT: " + qry);
+                
+                while(rs.next()) {
+                    System.out.println("LOOPING THROUGH THE RECORDS");
+                    fetch_lyric_path = rs.getString("lyric_path_to_DIR");
+                    System.out.println("LYRICAL CONTENT FOUND!");
+                    System.out.println("Lyrics for " + music_title);
+                    System.out.println("Lyric path ==> " + fetch_lyric_path);
+                    return fetch_lyric_path;
+                }
+            }
+            
+            catch(SQLException e) {
+                // Print to console the possible cause of error/s
+                String msg = "SQL statement may be incorrect or record/s are existing!";
+                String possible_err_statement = qry; 
+                System.out.println(msg);
+                System.out.println(possible_err_statement);
+                e.printStackTrace();
+            }
+            
+            // return new Music(); 
+            return fetch_lyric_path; 
+    }
     
     // This method returns an array of objects of Music class. 
     public Music[] view_and_get_MusicRecords() {
@@ -212,6 +254,7 @@ public class Model {
                     String fetch_music_artist = rs.getString("music_artist");
                     String fetch_music_album = rs.getString("music_album");
                     String fetch_music_path = rs.getString("music_path_to_DIR");
+                    String fetch_lyric_path = rs.getString("lyric_path_to_DIR");
                     
                     music_as_ls = new Music();
                     music_as_ls.setMusic_ID(fetch_music_ID);
@@ -219,6 +262,7 @@ public class Model {
                     music_as_ls.setMusic_artist(fetch_music_artist);
                     music_as_ls.setMusic_album(fetch_music_album);
                     music_as_ls.setMusic_path_to_DIR(fetch_music_path);
+                    music_as_ls.setLyric_path_to_DIR(fetch_lyric_path);
                     
                     music_record.add(music_as_ls);
                     
@@ -252,7 +296,7 @@ public class Model {
                 System.out.println("SELECT STATEMENT: " + qry);
 	        
                 while(rs.next()) {
-                    arr_objs.add(new Music(rs.getString("music_ID"),rs.getString("music_title"),rs.getString("music_artist"),rs.getString("music_album"),rs.getString("music_path_to_DIR")));
+                    arr_objs.add(new Music(rs.getString("music_ID"),rs.getString("music_title"),rs.getString("music_artist"),rs.getString("music_album"),rs.getString("music_path_to_DIR"), rs.getString("lyric_path_to_DIR")));
                     return arr_objs; 
                 }
                 

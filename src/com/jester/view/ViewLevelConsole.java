@@ -156,6 +156,7 @@ public class ViewLevelConsole {
                         String user_artist; 
                         String user_album; 
                         String user_path; 
+                        String lyrics_path;
                         
                         System.out.print("Enter a music title: ");
                         user_title = sc.nextLine(); 
@@ -169,12 +170,15 @@ public class ViewLevelConsole {
                         System.out.print("Enter a music path: ");
                         user_path = sc.nextLine();
                         
+                        System.out.print("Enter the lyrics path: ");
+                        lyrics_path = sc.nextLine(); 
+                        
                         new_music.setMusic_title(user_title);
                         new_music.setMusic_artist(user_artist);
                         new_music.setMusic_album(user_album);
                         new_music.setMusic_path_to_DIR(user_path);
                         
-                        new_music = new Music(new_music.getMusic_ID(), user_title, user_artist, user_album, user_path);
+                        new_music = new Music(new_music.getMusic_ID(), user_title, user_artist, user_album, user_path, lyrics_path);
                         
                         controller.SetNewMusic(new_music); 
                         
