@@ -1,6 +1,10 @@
 # Music Player Jester's Tavern
 <h3 align='left'>A standalone music player desktop application built, developed, and written with Java language</h3>
 
+<div>
+A standalone MVC desktop application developed using Java to locally play, stop, and add music with a local MySQL database environment. This project streamlines music to play on the client side based on their music selection on a file path.
+</div>
+
 Made possible with: 
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white) 
